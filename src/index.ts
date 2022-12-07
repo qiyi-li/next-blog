@@ -1,10 +1,13 @@
 import { AppDataSource } from "./data-source"
+import {Post} from "./entity/Post";
 
-AppDataSource.initialize().then(async (aaa) => {
-
-    console.log("Inserting a new user into the database...",aaa)
-
-
-    console.log("Here you can setup and run express / fastify / any other framework.")
-
+AppDataSource.initialize().then(async (connection) => {
+    const posts = await connection.manager.find(Post)
+    console.log({posts});
+    const p = new Post()
+    p.title = '123123'
+    p.content = '11111'
+    await connection.manager.save(p)
+    console.log(await connection.manager.find(Post));
+    await connection.destroy()
 }).catch(error => console.log(error))
