@@ -8,4 +8,9 @@ export class Post {
 	title: string | undefined;
 	@Column("text")
 	content: string | undefined;
+
+	constructor(attributes:Partial<Post>) {
+		Object.assign(this,attributes)
+	}
+
 }

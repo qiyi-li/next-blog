@@ -7,7 +7,7 @@ var _dataSource = require("./data-source");
 var _Post = require("./entity/Post");
 _dataSource.AppDataSource.initialize().then( /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(connection) {
-    var posts, p;
+    var posts, i, p;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -19,21 +19,36 @@ _dataSource.AppDataSource.initialize().then( /*#__PURE__*/function () {
             console.log({
               posts: posts
             });
-            p = new _Post.Post();
-            p.title = '123123';
-            p.content = '11111';
-            _context.next = 9;
+            if (!(posts.length === 0)) {
+              _context.next = 13;
+              break;
+            }
+            i = 0;
+          case 6:
+            if (!(i < 10)) {
+              _context.next = 13;
+              break;
+            }
+            p = new _Post.Post({
+              title: "Post1" + i,
+              content: "\u7B2C1".concat(i, "\u7BC7\u6587\u7AE0")
+            });
+            _context.next = 10;
             return connection.manager.save(p);
-          case 9:
+          case 10:
+            i++;
+            _context.next = 6;
+            break;
+          case 13:
             _context.t0 = console;
-            _context.next = 12;
+            _context.next = 16;
             return connection.manager.find(_Post.Post);
-          case 12:
+          case 16:
             _context.t1 = _context.sent;
             _context.t0.log.call(_context.t0, _context.t1);
-            _context.next = 16;
+            _context.next = 20;
             return connection.destroy();
-          case 16:
+          case 20:
           case "end":
             return _context.stop();
         }
