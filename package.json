@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "conc \"next dev\" \"babel -w ./src --out-dir dist --extensions .ts,.tsx\"",
     "build": "next build",
     "start": "next start",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",

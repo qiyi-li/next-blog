@@ -12,5 +12,5 @@ export const AppDataSource = new DataSource({
     logging: false,
     entities: ['src/entity/*.entity.{ts,js}'],
     migrations: ["dist/migration/*.js"],
-    subscribers: ["dist/subscriber/**/*.js"],
+    subscribers: ["dist/subscriber/**/*.js"]
 })
