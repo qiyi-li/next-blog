@@ -38,7 +38,7 @@ var CreatePosts1670492684478 = /*#__PURE__*/function () {
                     name: "content",
                     type: "text"
                   }, {
-                    name: "author_id",
+                    name: "authorId",
                     type: "int"
                   }]
                 }));

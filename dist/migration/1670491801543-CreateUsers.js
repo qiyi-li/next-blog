@@ -35,7 +35,7 @@ var CreateUsers1670491801543 = /*#__PURE__*/function () {
                     name: "username",
                     type: "varchar"
                   }, {
-                    name: "password_digest",
+                    name: "passwordDigest",
                     type: "varchar"
                   }]
                 }));

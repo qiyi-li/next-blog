@@ -4,17 +4,16 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CreateComments1670492890957 = void 0;
+exports.RenameColumns1670494790493 = void 0;
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-var _typeorm = require("typeorm");
-var CreateComments1670492890957 = /*#__PURE__*/function () {
-  function CreateComments1670492890957() {
-    (0, _classCallCheck2["default"])(this, CreateComments1670492890957);
+var RenameColumns1670494790493 = /*#__PURE__*/function () {
+  function RenameColumns1670494790493() {
+    (0, _classCallCheck2["default"])(this, RenameColumns1670494790493);
   }
-  (0, _createClass2["default"])(CreateComments1670492890957, [{
+  (0, _createClass2["default"])(RenameColumns1670494790493, [{
     key: "up",
     value: function () {
       var _up = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(queryRunner) {
@@ -23,28 +22,17 @@ var CreateComments1670492890957 = /*#__PURE__*/function () {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return queryRunner.createTable(new _typeorm.Table({
-                  name: "comments",
-                  columns: [{
-                    name: "id",
-                    type: "int",
-                    isPrimary: true,
-                    isGenerated: true,
-                    generationStrategy: "increment"
-                  }, {
-                    name: "userId",
-                    type: "int"
-                  }, {
-                    name: "postId",
-                    type: "int"
-                  }, {
-                    name: "content",
-                    type: "text"
-                  }]
-                }));
+                return queryRunner.renameColumn("users", "password_digest", "passwordDigest");
               case 2:
-                return _context.abrupt("return", _context.sent);
-              case 3:
+                _context.next = 4;
+                return queryRunner.renameColumn("posts", "author_id", "authorId");
+              case 4:
+                _context.next = 6;
+                return queryRunner.renameColumn("comments", "user_id", "userId");
+              case 6:
+                _context.next = 8;
+                return queryRunner.renameColumn("comments", "post_id", "postId");
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -65,10 +53,17 @@ var CreateComments1670492890957 = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return queryRunner.dropTable("comments");
+                return queryRunner.renameColumn("users", "passwordDigest", "password_digest");
               case 2:
-                return _context2.abrupt("return", _context2.sent);
-              case 3:
+                _context2.next = 4;
+                return queryRunner.renameColumn("posts", "authorId", "author_id");
+              case 4:
+                _context2.next = 6;
+                return queryRunner.renameColumn("comments", "userId", "user_id");
+              case 6:
+                _context2.next = 8;
+                return queryRunner.renameColumn("comments", "postId", "post_id");
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -81,6 +76,6 @@ var CreateComments1670492890957 = /*#__PURE__*/function () {
       return down;
     }()
   }]);
-  return CreateComments1670492890957;
+  return RenameColumns1670494790493;
 }();
-exports.CreateComments1670492890957 = CreateComments1670492890957;
+exports.RenameColumns1670494790493 = RenameColumns1670494790493;
