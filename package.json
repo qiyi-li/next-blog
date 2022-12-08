@@ -6,8 +6,10 @@
     "start": "next start",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "typeorm:build": "babel -w ./src --out-dir dist --extensions .ts,.tsx",
+    "m:create": "typeorm migration:create",
     "m:run": "typeorm migration:run -d dist/data-source.js",
-    "m:revert": "typeorm migration:revert -d dist/data-source.js"
+    "m:revert": "typeorm migration:revert -d dist/data-source.js",
+    "e:create": "typeorm entity:create"
   },
   "dependencies": {
     "@babel/cli": "7.10.1",
