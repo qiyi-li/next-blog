@@ -3,10 +3,10 @@ import {MigrationInterface, QueryRunner} from "typeorm";
 export class RenameColumns1670494790493 implements MigrationInterface {
 
 	public async up(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.renameColumn("users", "password_digest", "passwordDigest");
-		await queryRunner.renameColumn("posts", "author_id", "authorId");
-		await queryRunner.renameColumn("comments", "user_id", "userId");
-		await queryRunner.renameColumn("comments", "post_id", "postId");
+		// await queryRunner.renameColumn("users", "password_digest", "passwordDigest");
+		// await queryRunner.renameColumn("posts", "author_id", "authorId");
+		// await queryRunner.renameColumn("comments", "user_id", "userId");
+		// await queryRunner.renameColumn("comments", "post_id", "postId");
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {

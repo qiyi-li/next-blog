@@ -4,23 +4,38 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 var _dataSource = require("./data-source");
+var _Post = require("./entity/Post");
 var _User = require("./entity/User");
+var _Comment = require("./entity/Comment");
 _dataSource.AppDataSource.initialize().then( /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(connection) {
-    var manager, u1;
+    var manager, u1, p1, c1;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            manager = connection.manager;
+            manager = connection.manager; // 创建user1
             u1 = new _User.User();
             u1.username = "u1";
             u1.passwordDigest = "xxx";
             _context.next = 6;
             return manager.save(u1);
           case 6:
-            console.log(u1);
-          case 7:
+            p1 = new _Post.Post();
+            p1.title = "p1";
+            p1.content = "xxx";
+            p1.author = u1;
+            _context.next = 12;
+            return manager.save(p1);
+          case 12:
+            //add comments
+            c1 = new _Comment.Comment();
+            c1.content = "c1";
+            c1.user = u1;
+            c1.post = p1;
+            _context.next = 18;
+            return manager.save(c1);
+          case 18:
           case "end":
             return _context.stop();
         }
