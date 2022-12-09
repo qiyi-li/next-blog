@@ -6,13 +6,13 @@ import {Comment} from "./Comment";
 export class User {
 	@PrimaryGeneratedColumn("increment")
 	id: number | undefined;
-	@Column("varchar", {length: 100})
+	@Column("varchar")
 	username: string | undefined;
-	@Column("varchar", {length: 100})
+	@Column("varchar")
 	passwordDigest: string | undefined;
-	@CreateDateColumn("time")
+	@CreateDateColumn({type:"timestamp"})
 	createdAt: Date | undefined;
-	@UpdateDateColumn("time")
+	@UpdateDateColumn({type:"timestamp"})
 	updatedAt: Date | undefined;
 
 	@OneToMany(type => Post, post => post.author)

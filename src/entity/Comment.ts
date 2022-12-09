@@ -8,9 +8,9 @@ export class Comment {
 	id: number | undefined;
 	@Column("varchar")
 	content: string | undefined;
-	@CreateDateColumn("time")
+	@CreateDateColumn({type:"timestamp"})
 	createdAt: Date | undefined;
-	@UpdateDateColumn("time")
+	@UpdateDateColumn({type:"timestamp"})
 	updatedAt: Date | undefined;
 	@ManyToOne(type => User, user => user.comments)
 	user: User | undefined;
