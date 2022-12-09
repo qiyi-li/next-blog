@@ -1,16 +1,31 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	ManyToOne,
+	OneToMany,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn
+} from "typeorm";
+import {User} from "./User";
+import {Comment} from "./Comment";
 
 @Entity("posts")
 export class Post {
-	@PrimaryGeneratedColumn()
-	id: string | undefined;
-	@Column("varchar")
+	@PrimaryGeneratedColumn("increment")
+	id: number | undefined;
+	@Column("varchar", {length: 100})
 	title: string | undefined;
-	@Column("text")
+	@Column("varchar")
 	content: string | undefined;
+	@CreateDateColumn("time")
+	createdAt: Date | undefined;
+	@UpdateDateColumn("time")
+	updatedAt: Date | undefined;
 
-	constructor(attributes:Partial<Post>) {
-		Object.assign(this,attributes)
-	}
+	@ManyToOne(type => User, user => user.posts)
+	author: User | undefined;
 
+	@OneToMany(type => Comment, comment => comment.post)
+	comments: Comment[] | undefined;
 }
