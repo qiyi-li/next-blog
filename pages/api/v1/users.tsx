@@ -12,7 +12,6 @@ const Users: NextApiHandler = async (req, res) => {
 	const user = new User();
 	user.username = username;
 	user.username = username;
-	user.passwordDigest = md5(password);
 	user.passwordConfirmation = passwordConfirmation;
 	user.password = password;
 	await user.validate();
