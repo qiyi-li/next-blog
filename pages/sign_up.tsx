@@ -17,7 +17,8 @@ const SingUp = () => {
 			e.preventDefault();
 			console.log(singUpData);
 			await axios.post("/api/v1/users", singUpData).then((res) => {
-				console.log(res);
+				window.alert('注册成功')
+				window.location.href = '/sign_in'
 			}).catch((err) => {
 					if (err.response && err.response.status === 422) {
 						setErrors({...errors, ...err.response.data});
