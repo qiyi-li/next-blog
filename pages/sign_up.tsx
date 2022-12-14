@@ -15,7 +15,6 @@ const SingUp = () => {
 	);
 	const onSubmit = useCallback(async (e: FormEvent) => {
 			e.preventDefault();
-			console.log(singUpData);
 			await axios.post("/api/v1/users", singUpData).then((res) => {
 				window.alert('注册成功')
 				window.location.href = '/sign_in'

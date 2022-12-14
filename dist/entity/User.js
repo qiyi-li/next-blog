@@ -78,30 +78,29 @@ var User = (_dec = (0, _typeorm.Entity)("users"), _dec2 = (0, _typeorm.PrimaryGe
                 if (this.password === "") {
                   this.errors.password.push("不能为空");
                 }
-                console.log(this.password, this.passwordConfirmation);
                 if (this.password !== this.passwordConfirmation) {
                   this.errors.passwordConfirmation.push("密码不匹配");
                 }
                 if (_dataSource.AppDataSource.isInitialized) {
-                  _context.next = 10;
+                  _context.next = 9;
                   break;
                 }
-                _context.next = 10;
+                _context.next = 9;
                 return _dataSource.AppDataSource.initialize();
-              case 10:
+              case 9:
                 userRepository = _dataSource.AppDataSource.getRepository("User");
-                _context.next = 13;
+                _context.next = 12;
                 return userRepository.findOne({
                   where: {
                     username: this.username
                   }
                 });
-              case 13:
+              case 12:
                 hasUser = _context.sent;
                 if (hasUser) {
                   this.errors.username.push("用户名已存在");
                 }
-              case 15:
+              case 14:
               case "end":
                 return _context.stop();
             }

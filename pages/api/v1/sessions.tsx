@@ -1,5 +1,7 @@
 import {NextApiHandler} from "next";
 import {SignIn} from "../../../src/Model/SignIn";
+import {withIronSessionApiRoute} from "iron-session/next";
+import {sessionOptions} from "../../../lib/session";
 
 const Sessions: NextApiHandler = async (req, res) => {
 	const {username = "", password} = req.body;
@@ -13,9 +15,12 @@ const Sessions: NextApiHandler = async (req, res) => {
 		res.statusCode = 422;
 		res.write(JSON.stringify(signIn.errors));
 	} else {
+		req.session.user = signIn.user;
+		await req.session.save();
 		res.statusCode = 200;
 		res.write(JSON.stringify(signIn.user));
 	}
+
 	res.end();
 };
-export default Sessions;
+export default withIronSessionApiRoute(Sessions, sessionOptions);

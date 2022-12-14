@@ -62,7 +62,6 @@ export class User {
 		if (this.password === "") {
 			this.errors.password.push("不能为空");
 		}
-		console.log(this.password,this.passwordConfirmation);
 		if (this.password !== this.passwordConfirmation) {
 			this.errors.passwordConfirmation.push("密码不匹配");
 		}

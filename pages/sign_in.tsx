@@ -1,7 +1,14 @@
 import {FormEvent, useCallback, useState} from "react";
 import axios from "axios";
+import {withIronSessionSsr} from "iron-session/next";
+import {sessionOptions} from "../lib/session";
+import {ObjectLiteral} from "typeorm";
 
-const SingIn = () => {
+
+type Props = {
+	user: ObjectLiteral
+}
+const SingIn = (props: Props) => {
 	const [singInData, setSingInData] = useState({
 		username: "",
 		password: "",
@@ -15,8 +22,7 @@ const SingIn = () => {
 	const onSubmit = useCallback(async (e: FormEvent) => {
 			e.preventDefault();
 			axios.post("/api/v1/sessions", singInData).then((res) => {
-				console.log({res});
-				window.alert("登录成功");
+					window.alert("登录成功");
 				}
 			).catch((err) => {
 				if (err.response && err.response.status === 422) {
@@ -53,3 +59,22 @@ const SingIn = () => {
 	);
 };
 export default SingIn;
+export const getServerSideProps = withIronSessionSsr(async function ({req, res,}) {
+		const user = req.session.user;
+
+		if (user === undefined) {
+			// res.setHeader("location", "/sign_in");
+			// res.statusCode = 302;
+			// res.end();
+			return {
+				props: {
+					user: null,
+				},
+			};
+		}
+
+		return {
+			props: {user: req.session.user},
+		};
+	},
+	sessionOptions);
