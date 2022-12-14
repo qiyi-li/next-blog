@@ -3,58 +3,42 @@ import axios from "axios";
 import {withIronSessionSsr} from "iron-session/next";
 import {sessionOptions} from "../lib/session";
 import {ObjectLiteral} from "typeorm";
-
+import {useForm} from "../hooks/useForm";
 
 type Props = {
 	user: ObjectLiteral
 }
 const SingIn = (props: Props) => {
-	const [singInData, setSingInData] = useState({
+	const initFormData = {
 		username: "",
-		password: "",
-		passwordConfirmation: "",
+		password: ""
+	};
+	const onSubmit = (formData: typeof initFormData) => {
+		axios.post("/api/v1/sessions", formData).then((res) => {
+				window.alert("登录成功");
+			}
+		).catch((err) => {
+			if (err.response && err.response.status === 422) {
+				setErrors({...err.response.data});
+			}
+		});
+	};
+
+	const {form, setErrors} = useForm({
+		initFormData, onSubmit, fields: [
+			{
+				label: "用户名", type: "text", key: "username",
+			},
+			{
+				label: "密码", type: "password", key: "password",
+			}
+		],
+		buttons: <button type="submit">登录</button>
 	});
-	const [errors, setErrors] = useState({
-			username: [],
-			password: [],
-		}
-	);
-	const onSubmit = useCallback(async (e: FormEvent) => {
-			e.preventDefault();
-			axios.post("/api/v1/sessions", singInData).then((res) => {
-					window.alert("登录成功");
-				}
-			).catch((err) => {
-				if (err.response && err.response.status === 422) {
-					setErrors({...err.response.data});
-				}
-			});
-		}
-		, [singInData]);
 	return (
 		<div>
 			<h1>登录</h1>
-			<form action="sign_up" onSubmit={onSubmit}>
-				<div>
-					<label htmlFor="用户名">
-						用户名
-						<input type="text" value={singInData.username}
-									 onChange={e => setSingInData({...singInData, username: e.target.value})}/>
-					</label>
-					{errors.username.length > 0 && <div>{errors.username.join(",")}</div>}
-				</div>
-				<div>
-					<label htmlFor="密码">
-						密码
-						<input type="password" value={singInData.password}
-									 onChange={e => setSingInData({...singInData, password: e.target.value})}/>
-					</label>
-					{errors.password.length > 0 && <div>{errors.password.join(",")}</div>}
-				</div>
-				<div>
-					<button type={"submit"}>登录</button>
-				</div>
-			</form>
+			{form}
 		</div>
 	);
 };
