@@ -2,24 +2,9 @@ import axios from "axios";
 import {useForm} from "../hooks/useForm";
 
 const SingUp = () => {
-	const initFormData = {
-		username: "",
-		password: "",
-		passwordConfirmation: ""
-	};
-	const onSubmit = (formData: typeof initFormData) => {
-		axios.post("/api/v1/users", formData).then((res) => {
-			window.alert("注册成功");
-			window.location.href = "/sign_in";
-		}).catch((err) => {
-				if (err.response && err.response.status === 422) {
-					setErrors({...err.response.data});
-				}
-			}
-		);
-	};
-	const {form, setErrors} = useForm({
-		initFormData, onSubmit, fields: [
+	const {form} = useForm({
+		initFormData: {username: "", password: "", passwordConfirmation: ""},
+		fields: [
 			{
 				label: "用户名", type: "text", key: "username",
 			},
@@ -30,6 +15,10 @@ const SingUp = () => {
 				label: "确认密码", type: "password", key: "passwordConfirmation",
 			}
 		],
+		submit: {
+			request: formData => axios.post("/api/v1/users", formData),
+			message: "注册成功"
+		},
 		buttons: <button type="submit">注册</button>
 	});
 	return (

@@ -1,4 +1,3 @@
-import {FormEvent, useCallback, useState} from "react";
 import axios from "axios";
 import {withIronSessionSsr} from "iron-session/next";
 import {sessionOptions} from "../lib/session";
@@ -9,23 +8,10 @@ type Props = {
 	user: ObjectLiteral
 }
 const SingIn = (props: Props) => {
-	const initFormData = {
-		username: "",
-		password: ""
-	};
-	const onSubmit = (formData: typeof initFormData) => {
-		axios.post("/api/v1/sessions", formData).then((res) => {
-				window.alert("登录成功");
-			}
-		).catch((err) => {
-			if (err.response && err.response.status === 422) {
-				setErrors({...err.response.data});
-			}
-		});
-	};
 
-	const {form, setErrors} = useForm({
-		initFormData, onSubmit, fields: [
+	const {form} = useForm({
+		initFormData: {username: "", password: ""},
+		fields: [
 			{
 				label: "用户名", type: "text", key: "username",
 			},
@@ -33,6 +19,10 @@ const SingIn = (props: Props) => {
 				label: "密码", type: "password", key: "password",
 			}
 		],
+		submit: {
+			request: formData => axios.post(`/api/v1/sessions`, formData),
+			message: "登录成功"
+		},
 		buttons: <button type="submit">登录</button>
 	});
 	return (
