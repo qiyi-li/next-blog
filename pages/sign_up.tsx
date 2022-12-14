@@ -21,7 +21,7 @@ const SingUp = () => {
 				window.location.href = '/sign_in'
 			}).catch((err) => {
 					if (err.response && err.response.status === 422) {
-						setErrors({...errors, ...err.response.data});
+						setErrors({...err.response.data});
 						console.log({errors});
 					}
 				}

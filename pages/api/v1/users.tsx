@@ -6,9 +6,9 @@ import md5 from "md5";
 const Users: NextApiHandler = async (req, res) => {
 	const {username = "", password, passwordConfirmation} = req.body;
 	if (!AppDataSource.isInitialized) await AppDataSource.initialize();
+	const userRepository = AppDataSource.getRepository("User");
 	res.setHeader("Content-Type", "application/json; charset=utf-8");
 
-	const userRepository = AppDataSource.getRepository("User");
 	const user = new User();
 	user.username = username;
 	user.username = username;

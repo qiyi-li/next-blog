@@ -14,12 +14,20 @@ const SingIn = () => {
 	);
 	const onSubmit = useCallback(async (e: FormEvent) => {
 			e.preventDefault();
+			axios.post("/api/v1/sessions", singInData).then((res) => {
+				console.log({res});
+				window.alert("登录成功");
+				}
+			).catch((err) => {
+				if (err.response && err.response.status === 422) {
+					setErrors({...err.response.data});
+				}
+			});
 		}
 		, [singInData]);
 	return (
 		<div>
-			{JSON.stringify(errors)}
-			<h1>Sign Up</h1>
+			<h1>登录</h1>
 			<form action="sign_up" onSubmit={onSubmit}>
 				<div>
 					<label htmlFor="用户名">
