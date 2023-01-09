@@ -79,6 +79,7 @@ export class User {
 	}
 
 	@BeforeInsert()
+	// 新增之前运行这个
 	generatePasswordDigest() {
 		this.passwordDigest = md5(this.password||'');
 	}

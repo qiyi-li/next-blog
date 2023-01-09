@@ -48,7 +48,7 @@ export function useForm<T>(options: useFormOptions<T>) {
 	const form = (
 		<form onSubmit={_onSubmit}>
 			{fields.map(field =>
-				<div>
+				<div key={field.label}>
 					<label>{field.label}
 						{field.type === "textarea" ?
 							<textarea onChange={(e) => onChange(field.key, e.target.value)}>
@@ -59,9 +59,11 @@ export function useForm<T>(options: useFormOptions<T>) {
 										 onChange={(e) => onChange(field.key, e.target.value)}/>
 						}
 					</label>
-					{errors[field.key]?.length > 0 && <div>
-						{errors[field.key].join(",")}
-          </div>}
+					{errors[field.key] && errors[field.key]!.length > 0 &&
+            <div>
+							{errors[field.key]!.join(",")}
+            </div>
+					}
 				</div>
 			)}
 			<div>
