@@ -21,7 +21,14 @@ const SingIn = (props: Props) => {
 		],
 		submit: {
 			request: formData => axios.post(`/api/v1/sessions`, formData),
-			message: "登录成功"
+			success:  ()=> {
+				window.alert("登录成功")
+				const search = decodeURIComponent( window.location.search);
+				const [searchName,searchVal]=search?.slice(1).split('=')
+				if(searchName==='return_to'){
+					  window.location.href=searchVal
+				}
+			}
 		},
 		buttons: <button type="submit">登录</button>
 	});
@@ -35,7 +42,6 @@ const SingIn = (props: Props) => {
 export default SingIn;
 export const getServerSideProps = withIronSessionSsr(async function ({req, res,}) {
 		const user = req.session.user;
-
 		if (user === undefined) {
 			// res.setHeader("location", "/sign_in");
 			// res.statusCode = 302;

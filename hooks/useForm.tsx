@@ -12,7 +12,7 @@ type useFormOptions<T> = {
 	buttons: ReactElement;
 	submit: {
 		request: (formData: T) => Promise<AxiosResponse<T>>;
-		message: string
+		success: () => void;
 	}
 }
 
@@ -37,10 +37,13 @@ export function useForm<T>(options: useFormOptions<T>) {
 	const _onSubmit = useCallback((e: FormEvent) => {
 		e.preventDefault();
 		submit.request(formData).then((res) => {
-				window.alert(submit.message);
+				submit.success();
 			}, (err) => {
 				if (err.response && err.response.status === 422) {
 					setErrors(err.response.data);
+				} else if (err.response && err.response.status === 401) {
+					window.alert("请先登录");
+					window.location.href = "/sign_in?return_to=" + encodeURIComponent(window.location.pathname);
 				}
 			}
 		);
@@ -51,9 +54,7 @@ export function useForm<T>(options: useFormOptions<T>) {
 				<div key={field.label}>
 					<label>{field.label}
 						{field.type === "textarea" ?
-							<textarea onChange={(e) => onChange(field.key, e.target.value)}>
-                {`${formData[field.key]}`}
-              </textarea>
+							<textarea value={formData[field.key] as string} onChange={(e) => onChange(field.key, e.target.value)}/>
 							:
 							<input type={field.type} value={formData[field.key] as string}
 										 onChange={(e) => onChange(field.key, e.target.value)}/>

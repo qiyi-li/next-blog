@@ -1,9 +1,29 @@
 import {NextApiHandler} from "next";
+import {Post} from "../../../src/entity/Post";
+import { sessionOptions } from 'lib/session'
+import {withIronSessionApiRoute} from "iron-session/next";
+import {AppDataSource} from "../../../src/data-source";
 
-const Posts: NextApiHandler = (req, res) => {
+const Posts: NextApiHandler = async (req, res) => {
 	res.statusCode = 200;
 	res.setHeader("Content-type", "application/json");
-	res.write(JSON.stringify({name: "123123123"}));
-	res.end();
+	if(req.method === "POST"){
+		const {title, content}=req.body;
+		const post = new Post()
+		post.title = title;
+		post.content = content;
+		const user = req.session?.user
+		if(!user){
+			res.statusCode=401
+			res.end()
+			return
+		}
+		if (!AppDataSource.isInitialized) await AppDataSource.initialize();
+		const postRepository = AppDataSource.getRepository("Post");
+		// @ts-ignore
+		post.author = user
+		const p = await postRepository.save(post)
+		res.json(p)
+	}
 };
-export default Posts;
+export default withIronSessionApiRoute(Posts, sessionOptions)
