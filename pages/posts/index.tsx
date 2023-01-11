@@ -7,6 +7,7 @@ import {AppDataSource} from "../../src/data-source";
 import {Post} from "../../src/entity/Post";
 import "reflect-metadata";
 import qs from "querystring";
+import {usePager} from "../../hooks/usePager";
 
 type Props = {
 	posts: Post[],
@@ -17,6 +18,11 @@ type Props = {
 }
 export default function PostsIndex(props: Props) {
 	const {posts} = props;
+	const urlMaker = (page: number) => {
+		return `?page=${page}`;
+	};
+	const {count, page, totalPage} = props;
+	const {pager} = usePager({count, page, totalPage, url: urlMaker});
 	return (
 		<Layout home>
 			<Head>
@@ -33,9 +39,7 @@ export default function PostsIndex(props: Props) {
 				))}
 			</section>
 			<footer>
-				共{props.count}篇文章，当前第{props.page}/{props.totalPage}页
-				{props.page !== 1 && <Link href={`?page=${props.page - 1}`}>上一页</Link>}
-				{props.page < props.totalPage && <Link href={`?page=${props.page + 1}`}>下一页</Link>}
+				{pager}
 			</footer>
 		</Layout>
 	);
@@ -45,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}) => {
 	if (!AppDataSource.isInitialized) await AppDataSource.initialize();
 	const postRepository = AppDataSource.getRepository("Post");
 	const index = req.url?.indexOf("?");
-	const pager = {take: 10, skip: 0};
+	const pager = {take: 1, skip: 0};
 	let page = 1;
 
 	if (index && req.url) {
