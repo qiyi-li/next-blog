@@ -29,3 +29,12 @@ docker volume rm blog-data
 yarn m:run
 node dist/seed.js
 ```
+
+## docker build
+```
+docker build . -t qi/node-web-app
+```
+## docker run
+```
+docker run -p 3000:3000 -d qi/node-web-app
+```

@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}) => {
 	if (!AppDataSource.isInitialized) await AppDataSource.initialize();
 	const postRepository = AppDataSource.getRepository("Post");
 	const index = req.url?.indexOf("?");
-	const pager = {take: 1, skip: 0};
+	const pager = {take: 10, skip: 0};
 	let page = 1;
 
 	if (index && req.url) {
