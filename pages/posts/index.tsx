@@ -24,24 +24,26 @@ export default function PostsIndex(props: Props) {
 	const {count, page, totalPage} = props;
 	const {pager} = usePager({count, page, totalPage, url: urlMaker});
 	return (
-		<Layout home>
-			<Head>
-				<title>{siteTitle}</title>
-			</Head>
-			<section className={utilStyles.headingMd}>
-				<p>[Your Self Introduction]</p>
-				{posts.map(post => (
-					<div key={post.id}>
-						<Link href={`/posts/${post.id}`}>
-							{post.title}
-						</Link>
-					</div>
-				))}
-			</section>
-			<footer>
-				{pager}
-			</footer>
-		</Layout>
+		<div>
+			<Layout home>
+				<Head>
+					<title>{siteTitle}</title>
+				</Head>
+				<section className={utilStyles.headingMd}>
+					<p>[Your Self Introduction]</p>
+					{posts.map(post => (
+						<div key={post.id}>
+							<Link href={`/posts/${post.id}`}>
+								{post.title}
+							</Link>
+						</div>
+					))}
+				</section>
+				<footer>
+					{pager}
+				</footer>
+			</Layout>
+		</div>
 	);
 }
 
