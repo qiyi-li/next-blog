@@ -22,16 +22,16 @@ export const usePager = (options: Options) => {
 		return result;
 	}, [] as number[]);
 
-	const pager = (
-		<div className={style.wrapper}>
-			{page !== 1 && <Link href={url(page - 1)}>上一页</Link>}
-			{pageNumbers.map((n) => n === -1 ? <span> ...</span> :
-				<Link className={`${page === n ? style.currentLink : ""} ${style.link}`} href={url(n)}>{n}</Link>)}
-			{page < totalPage && <Link className={style.link} href={url(page + 1)}>下一页</Link>}
-			<span>
+	const pager = (totalPage > 1 ?
+			<div className={style.wrapper}>
+				{page !== 1 && <Link className={style.link} href={url(page - 1)}>上一页</Link>}
+				{pageNumbers.map((n) => n === -1 ? <span> ...</span> :
+					<Link className={`${page === n ? style.currentLink : ""} ${style.link}`} href={url(n)}>{n}</Link>)}
+				{page < totalPage && <Link className={style.link} href={url(page + 1)}>下一页</Link>}
+				<span>
 			共{count}篇文章，当前第{page}/{totalPage}页
 		</span>
-		</div>
+			</div> : null
 	);
 	return {
 		pager

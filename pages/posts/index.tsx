@@ -8,38 +8,53 @@ import {Post} from "../../src/entity/Post";
 import "reflect-metadata";
 import qs from "querystring";
 import {usePager} from "../../hooks/usePager";
+import style from "./posts.module.sass";
+import {withIronSessionSsr} from "iron-session/next";
+import {sessionOptions} from "../../lib/session";
+import {User} from "../../src/entity/User";
 
 type Props = {
 	posts: Post[],
 	count: number,
 	num: number
 	page: number,
-	totalPage: number
+	totalPage: number,
+	user: User | null
 }
 export default function PostsIndex(props: Props) {
-	const {posts} = props;
+	const {posts, count, page, totalPage, user} = props;
+	console.log({user});
 	const urlMaker = (page: number) => {
 		return `?page=${page}`;
 	};
-	const {count, page, totalPage} = props;
 	const {pager} = usePager({count, page, totalPage, url: urlMaker});
 	return (
 		<div>
-			<Layout home>
+			{/*// @ts-ignore*/}
+			<Layout title={"文章列表"} header={
+				<div className={style.titleWrapper}>
+					<span></span>
+					<h2 className={utilStyles.headingLg}>
+						文章列表
+					</h2>
+					{user ? <Link href={"/posts/new"} className={style.newButton}>新建</Link> : <span></span>}
+				</div>
+			} backLink={"/"} backInfo={"返回首页"} displayNewButton={true}>
 				<Head>
 					<title>{siteTitle}</title>
 				</Head>
 				<section className={utilStyles.headingMd}>
-					<p>[Your Self Introduction]</p>
-					{posts.map(post => (
-						<div key={post.id}>
-							<Link href={`/posts/${post.id}`}>
-								{post.title}
-							</Link>
-						</div>
-					))}
+					<main className={style.main}>
+						{posts.map(post => (
+							<div key={post.id} className={style.postItem}>
+								<Link href={`/posts/${post.id}`}>
+									{post.title}
+								</Link>
+							</div>
+						))}
+					</main>
 				</section>
-				<footer>
+				<footer className={style.footer}>
 					{pager}
 				</footer>
 			</Layout>
@@ -47,7 +62,7 @@ export default function PostsIndex(props: Props) {
 	);
 }
 
-export const getServerSideProps: GetServerSideProps = async ({req}) => {
+export const getServerSideProps: GetServerSideProps = withIronSessionSsr(async ({req}) => {
 	if (!AppDataSource.isInitialized) await AppDataSource.initialize();
 	const postRepository = AppDataSource.getRepository("Post");
 	const index = req.url?.indexOf("?");
@@ -66,8 +81,9 @@ export const getServerSideProps: GetServerSideProps = async ({req}) => {
 			count: posts[1],
 			num: pager.take,
 			page,
-			totalPage: Math.ceil(posts[1] / pager.take)
+			totalPage: Math.ceil(posts[1] / pager.take),
+			user: req.session.user || null
 
 		}
 	};
-};
+}, sessionOptions);

@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "conc \"next dev\" \"babel -w ./src --out-dir dist --extensions .ts,.tsx\"",
+    "dev": "concurrently \"next dev\" \"babel -w ./src --out-dir dist --extensions .ts,.tsx\"",
     "build": "next build",
     "start": "next start",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
@@ -15,9 +15,13 @@
     "@babel/cli": "7.10.1",
     "@babel/core": "7.20.5",
     "@babel/runtime": "7.20.6",
+    "@types/marked": "^4.0.8",
     "axios": "1.2.1",
+    "classnames": "^2.3.2",
+    "github-markdown-css": "^5.1.0",
     "iron-session": "6.3.1",
     "lodash": "4.17.21",
+    "marked": "^4.2.5",
     "md5": "2.3.0",
     "next": "latest",
     "pg": "8.8.0",
@@ -30,6 +34,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "7.20.5",
     "@types/axios": "0.14.0",
+    "@types/classnames": "^2.3.1",
     "@types/lodash": "4.14.191",
     "@types/md5": "2.3.2",
     "@types/node": "18.11.11",

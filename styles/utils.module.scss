@@ -50,3 +50,38 @@
 .lightText {
     color: #666;
 }
+
+.formWrapper {
+    border: 1px solid red;
+
+    .labelText {
+        display: inline-block;
+        min-width: 4em;
+        text-align: right;
+
+        color: green;
+    }
+
+    .input {
+        max-width: 100%;
+    }
+
+    .textarea {
+
+    }
+
+    .fieldItem {
+        margin-bottom: 12px;
+
+        display: flex;
+
+        input, textarea {
+            width: calc(100% - 5em);
+            flex-grow: 1;
+        }
+        textarea{
+            height: 20em;
+        }
+
+    }
+}
