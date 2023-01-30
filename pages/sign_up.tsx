@@ -1,5 +1,6 @@
 import axios from "axios";
 import {useForm} from "../hooks/useForm";
+import Layout from '../components/layout/layout';
 
 const SingUp = () => {
 	const {form} = useForm({
@@ -17,15 +18,18 @@ const SingUp = () => {
 		],
 		submit: {
 			request: formData => axios.post("/api/v1/users", formData),
-			success: ()=> window.alert("注册成功")
+			success: ()=> {
+				window.location.href="/sign_in"
+				window.alert('注册成功');
+			}
 		},
+		centered: true,
 		buttons: <button type="submit">注册</button>
 	});
 	return (
-		<div>
-			<h1>Sign Up</h1>
+		<Layout home={false} centered={true} header={<h1>注册</h1>}>
 			{form}
-		</div>
+		</Layout>
 	);
 };
 export default SingUp;

@@ -1,7 +1,7 @@
 ## 创建容器
 
 ```
-docker run -v "$PWD/blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=blog -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres:12.2
+docker run -v "$PWD/blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=blog -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres:14
 
 ```
 
@@ -32,9 +32,9 @@ node dist/seed.js
 
 ## docker build
 ```
-docker build . -t qi/node-web-app
+docker build . -t node-web-app
 ```
 ## docker run
 ```
-docker run -p 3000:3000 -d qi/node-web-app
+docker run --network=host -p 3000:3000 -d node-web-app
 ```

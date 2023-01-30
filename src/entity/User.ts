@@ -53,11 +53,11 @@ export class User {
 		}
 		// @ts-ignore
 		if (this.username.trim().length > 42) {
-			this.errors.username.push("太长");
+			this.errors.username.push("用户名太长");
 		}
 		// @ts-ignore
-		if (this.username.trim().length <= 3) {
-			this.errors.username.push("太短");
+		if (this.username.trim().length < 1) {
+			this.errors.username.push("用户名太短");
 		}
 		if (this.password === "") {
 			this.errors.password.push("不能为空");
