@@ -1,12 +1,13 @@
-export const emptyValidate = (val:object):{}=>{
-  const keys = Object.keys(val)
-  let hasError=false
-  //TODO
- const errors=  keys.reduce((result,k)=>{
-    if(val[k].trim()===''){
-      result[k]=['请输入完整后再提交']
-    }
-    return result
-  },{})
-  return [hasError,errors]
-}
+export const emptyValidate = function <T>(val: { title: string; content: string }) {
+	let hasError = false;
+	const errors: { title: string[], content: string[] } = {title: [], content: []};
+	if (val.title.trim() === "") {
+		hasError = true;
+		errors.title.push("请输入标题");
+	}
+	if (val.content.trim() === "") {
+		hasError = true;
+		errors.content.push("请输入内容");
+	}
+	return [hasError, errors];
+};

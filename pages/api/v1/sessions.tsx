@@ -13,7 +13,7 @@ const Sessions: NextApiHandler = async (req, res) => {
 	await signIn.validate();
 	if (signIn.hasErrors()) {
 		res.statusCode = 422;
-		res.write(JSON.stringify(signIn.errors));
+		res.write(JSON.stringify({errors:signIn.errors}));
 	} else {
 		req.session.user = signIn.user;
 		await req.session.save();

@@ -22,7 +22,7 @@ const PostPage: NextPage<Props> = (props) => {
 		<Layout home={false} title={post.title} backLink={"/posts"}
 						header={
 							<div className={style.titleWrapper}>
-								<span></span>
+								<Link className={''} href={`/posts`}>返回列表</Link>
 								<h2 className={utilStyles.headingLg}>{post.title}</h2>
 								{user ? <Link className={style.newButton} href={`/posts/${post.id}/edit`}>编辑</Link> : <span></span>}
 							</div>

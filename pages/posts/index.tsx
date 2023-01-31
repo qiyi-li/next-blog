@@ -12,6 +12,10 @@ import style from "./posts.module.sass";
 import {withIronSessionSsr} from "iron-session/next";
 import {sessionOptions} from "../../lib/session";
 import {User} from "../../src/entity/User";
+import {useEffect, useRef, useState} from "react";
+import cs from "classnames";
+import axios from "axios";
+import {render} from "react-dom";
 
 type Props = {
 	posts: Post[],
@@ -21,12 +25,53 @@ type Props = {
 	totalPage: number,
 	user: User | null
 }
+
 export default function PostsIndex(props: Props) {
 	const {posts, count, page, totalPage, user} = props;
-	console.log({user});
 	const urlMaker = (page: number) => {
 		return `?page=${page}`;
 	};
+
+	const timer = useRef<number | null>(null);
+	const [hoverPostId, setHoverPostId] = useState<string | null>(null);
+
+	const onDelete = (id: string) => {
+		if (confirm("确定删除吗？")) {
+			axios.delete(`/api/v1/posts`, {data: {id}}).then(() => {
+				window.alert("删除成功");
+				window.location.reload();
+			}, (res) => {
+				window.alert(res.response.data);
+			});
+		}
+	};
+
+	useEffect(() => {
+		const elements = document.querySelectorAll(".post-item");
+
+		elements.forEach(e => {
+			const eleId = e.getAttribute("id");
+
+			e.addEventListener("mouseenter", () => {
+				window.clearTimeout(timer.current!);
+				timer.current = window.setTimeout(() => {
+					if (timer.current) {
+						window.clearTimeout(timer.current!);
+						setHoverPostId(eleId);
+					}
+				}, 1000);
+			});
+
+			e.addEventListener("mouseleave", (e) => {
+				window.clearTimeout(timer.current!);
+				timer.current = null;
+				setHoverPostId(null);
+			});
+
+		});
+	}, []);
+
+
 	const {pager} = usePager({count, page, totalPage, url: urlMaker});
 	return (
 		<div>
@@ -46,10 +91,15 @@ export default function PostsIndex(props: Props) {
 				<section className={utilStyles.headingMd}>
 					<main className={style.main}>
 						{posts.map(post => (
-							<div key={post.id} className={style.postItem}>
+							<div key={post.id} id={post.id?.toString()} className={cs(style.postItem, "post-item")}>
 								<Link href={`/posts/${post.id}`}>
 									{post.title}
+									<span>{post.author?.username}</span>
 								</Link>
+								{hoverPostId === post.id?.toString() && user?.id === post?.author?.id &&
+                  <span key={post.id} className={style.delete}
+                        onClick={onDelete.bind(null, post.id?.toString())}>删除</span>}
+
 							</div>
 						))}
 					</main>
@@ -74,7 +124,7 @@ export const getServerSideProps: GetServerSideProps = withIronSessionSsr(async (
 		page = parseInt(query.page?.toString() || "1");
 		if (query.page) pager.skip = (page - 1) * pager.take;
 	}
-	const posts = await postRepository.findAndCount({...pager, order: {updatedAt: "DESC"}});
+	const posts = await postRepository.findAndCount({...pager, order: {updatedAt: "DESC"}, relations: ["author"]});
 	return {
 		props: {
 			posts: JSON.parse(JSON.stringify(posts[0])),

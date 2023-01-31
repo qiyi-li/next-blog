@@ -6,6 +6,7 @@ import utilStyle from 'styles/utils.module.scss';
 
 const PostsNew: NextPage = () => {
   const {form} = useForm({
+    showBack: true,
     initFormData: {title: '', content: ''},
     fields: [
       {label: '标题：', type: 'text', key: 'title',},

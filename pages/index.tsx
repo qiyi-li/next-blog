@@ -10,7 +10,6 @@ type Props = {
   user: User
 }
 const Home: NextPage<Props> = (props) => {
-  console.log(props.user);
   return (
     <div>
       <Layout home userName={props.user?.username || ''}>

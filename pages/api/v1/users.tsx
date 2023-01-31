@@ -20,7 +20,7 @@ const Users: NextApiHandler = async (req, res) => {
 
 	if (hasError) {
 		res.statusCode = 422;
-		res.write(JSON.stringify(errors));
+		res.write(JSON.stringify({errors}));
 	} else {
 		const u = await userRepository.save(user);
 		res.statusCode = 200;

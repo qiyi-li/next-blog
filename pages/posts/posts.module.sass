@@ -2,23 +2,53 @@
     text-align: center
 
     .postItem
+        background-color: #fff
         text-align: start
-        border-bottom: 1px dashed #ddd
-        padding: 12px 12px
+        border-bottom: 1px dashed #5b8c00
+        padding: 8px 8px
+        display: flex
+
+        &:first-child
+            border-radius: 8px 8px 0 0
+
+        &:last-child
+            border-radius: 0 0 8px 8px
+
+        .delete
+            width: 3em
+            display: flex
+            padding: 3px
+            justify-content: center
+            background-color: #f5222d
+            cursor: pointer
+            color: #fff
+            border-radius: 8px
+
+            &:active
+                background-color: #cf1322
 
         a
+            flex-grow: 1
+            width: 100%
             color: #000
             text-decoration: none
+            padding: 4px 0
+
+            span
+                margin-left: 16px
+                font-size: 0.8em
 
             &:hover
                 color: #00b96b
-                text-decoration: underline
 
 
 .footer
 
 
 .article
+    border-radius: 8px
+    padding: 12px
+
     h1, h2, h3, h4, h5, h6
         font-weight: 600
 
@@ -40,6 +70,7 @@
         border: 1px solid #ddd
         padding: 5px 12px
         border-radius: 10px
+
         &:hover
             background-color: #009456
             text-decoration: none
