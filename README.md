@@ -18,7 +18,7 @@ CREATE DATABASE blog_development ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYP
 ```
 docker kill 容器id
 docker rm 容器id
-rm -rf blog-data
+rm -rf blog-data 
 或
 docker volume rm blog-data
 ```

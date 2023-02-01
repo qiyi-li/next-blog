@@ -112,7 +112,7 @@ export default function PostsIndex(props: Props) {
 	);
 }
 
-export const getServerSideProps: GetServerSideProps = withIronSessionSsr(async ({req}) => {
+export const getServerSideProps: GetServerSideProps = withIronSessionSsr(async function getServerSideProps ({req}) {
 	if (!AppDataSource.isInitialized) await AppDataSource.initialize();
 	const postRepository = AppDataSource.getRepository("Post");
 	const index = req.url?.indexOf("?");

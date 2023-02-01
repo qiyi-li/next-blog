@@ -39,7 +39,7 @@ const PostPage: NextPage<Props> = (props) => {
 };
 export default PostPage;
 
-export const getServerSideProps: GetServerSideProps<any, { id: string }> = withIronSessionSsr(async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps<any, { id: string }> = withIronSessionSsr(async function getServerSideProps (context: GetServerSidePropsContext)  {
 	if (!AppDataSource.isInitialized) await AppDataSource.initialize();
 	const user = context.req.session.user || null;
 	const postRepository = AppDataSource.getRepository("Post");

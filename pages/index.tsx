@@ -26,7 +26,7 @@ const Home: NextPage<Props> = (props) => {
   );
 };
 export default Home;
-export const getServerSideProps = withIronSessionSsr(async function ({req, res,}) {
+export const getServerSideProps = withIronSessionSsr(async function getServerSideProps ({req, res,}) {
     const user = req.session.user;
     if (user === undefined) {
       res.setHeader('location', '/sign_in');
