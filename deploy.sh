@@ -1,5 +1,5 @@
 docker start b21&&
-cd /home/blog/app/ &&
+cd /home/blog/app/next-blog &&
 git pull &&
 yarn install --production=false &&
 yarn build &&
