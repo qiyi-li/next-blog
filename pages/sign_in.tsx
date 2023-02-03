@@ -24,12 +24,12 @@ const SingIn = (props: Props) => {
     ],
     submit: {
       request: formData => axios.post(`/api/v1/sessions`, formData),
-      success: () => {
+      success: async() => {
         const query = qs.parse(window.location.search.slice(1));
         if (query.retutnTo) {
-          window.location.href = query.retutnTo.toString();
+          await router.push(query.retutnTo.toString())
         }else{
-          window.location.href="/"
+          await router.push('/')
         }
       }
     },

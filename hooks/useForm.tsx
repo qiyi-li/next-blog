@@ -49,12 +49,12 @@ export function useForm<T>(options: useFormOptions<T>) {
 		!_.isEmpty(formData) ?
 			submit.request(formData).then((res) => {
 					submit.success();
-				}, (err) => {
+				}, async(err) => {
 				if (err.response && err.response.data.errors) {
 						setErrors(err.response.data.errors);
 					} else if (err.response && err.response.status === 401) {
 						window.alert("请先登录");
-						window.location.href = "/sign_in?returnTo=" + encodeURIComponent(window.location.pathname);
+						await router.push("/sign_in?returnTo=" + encodeURIComponent(window.location.pathname))
 					} else {
 						err.response.data && window.alert(err.response.data);
 					}
