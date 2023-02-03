@@ -15,7 +15,6 @@ import {User} from "../../src/entity/User";
 import {useEffect, useRef, useState} from "react";
 import cs from "classnames";
 import axios from "axios";
-import {render} from "react-dom";
 
 type Props = {
 	posts: Post[],

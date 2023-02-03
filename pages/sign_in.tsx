@@ -24,7 +24,6 @@ const SingIn = (props: Props) => {
     submit: {
       request: formData => axios.post(`/api/v1/sessions`, formData),
       success: () => {
-        window.alert('登录成功');
         const query = qs.parse(window.location.search.slice(1));
         if (query.retutnTo) {
           window.location.href = query.retutnTo.toString();

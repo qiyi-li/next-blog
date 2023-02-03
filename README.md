@@ -32,9 +32,9 @@ node dist/seed.js
 
 ## docker build
 ```
-docker build . -t node-web-app
+docker build . -t node-blog-app
 ```
 ## docker run
 ```
-docker run --network=host -p 3000:3000 -d node-web-app
+docker run --network=host -p 3000:3000 -d node-blog-app
 ```
