@@ -13,7 +13,7 @@ type Props = {
 const SingIn = (props: Props) => {
   const router = useRouter()
   const {form} = useForm({
-    initFormData: {username: '', password: ''},
+    initFormData: {username: 'liqiyi', password: '123'},
     fields: [
       {
         label: '用户名', type: 'text', key: 'username',
