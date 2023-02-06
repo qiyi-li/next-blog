@@ -1,8 +1,10 @@
 import axios from "axios";
 import {useForm} from "../hooks/useForm";
 import Layout from '../components/layout/layout';
+import {useRouter} from 'next/router';
 
 const SingUp = () => {
+	const router = useRouter()
 	const {form} = useForm({
 		initFormData: {username: "", password: "", passwordConfirmation: ""},
 		fields: [
@@ -18,9 +20,9 @@ const SingUp = () => {
 		],
 		submit: {
 			request: formData => axios.post("/api/v1/users", formData),
-			success: ()=> {
-				window.location.href="/sign_in"
+			success: async()=> {
 				window.alert('注册成功');
+				await router.push('/sign_in')
 			}
 		},
 		centered: true,

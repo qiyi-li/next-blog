@@ -20,7 +20,6 @@ const Sessions: NextApiHandler = async (req, res) => {
 		res.statusCode = 200;
 		res.write(JSON.stringify(signIn.user));
 	}
-
 	res.end();
 };
 export default withIronSessionApiRoute(Sessions, sessionOptions);

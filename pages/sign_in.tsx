@@ -5,14 +5,15 @@ import {ObjectLiteral} from 'typeorm';
 import {useForm} from '../hooks/useForm';
 import qs from 'querystring';
 import Layout from '../components/layout/layout';
+import {useRouter} from 'next/router';
 
 type Props = {
   user: ObjectLiteral
 }
 const SingIn = (props: Props) => {
-
+  const router = useRouter()
   const {form} = useForm({
-    initFormData: {username: '', password: ''},
+    initFormData: {username: 'liqiyi', password: '123'},
     fields: [
       {
         label: '用户名', type: 'text', key: 'username',
@@ -23,17 +24,20 @@ const SingIn = (props: Props) => {
     ],
     submit: {
       request: formData => axios.post(`/api/v1/sessions`, formData),
-      success: () => {
+      success: async() => {
         const query = qs.parse(window.location.search.slice(1));
         if (query.retutnTo) {
-          window.location.href = query.retutnTo.toString();
+          await router.push(query.retutnTo.toString())
         }else{
-          window.location.href="/"
+          await router.push('/')
         }
       }
     },
     centered: true,
-    buttons: <button type="submit">登录</button>
+    buttons: <div>
+      <button type="submit">登录</button>
+      <button style={{marginLeft:'24px'}} type={"button"} onClick={() => {router.push('/sign_up').then(r => {})}}>注册</button>
+    </div>
   });
   return (
     <Layout home={false} centered={true} header={<h1>登录</h1>}>

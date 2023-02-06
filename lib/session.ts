@@ -6,7 +6,7 @@ export const sessionOptions: IronSessionOptions = {
 	password: process.env.NEXT_PUBLIC_SECRET_KEY as string,
 	cookieName: "blog",
 	cookieOptions: {
-		secure: process.env.NODE_ENV === "production",
+		secure: false,
 	},
 };
 
