@@ -27,7 +27,7 @@ docker volume rm blog-data
 
 ```
 yarn m:run
-node dist/seed.js
+node dist/seed.js 
 ```
 
 ## docker build
@@ -37,4 +37,10 @@ docker build . -t node-blog-app
 ## docker run
 ```
 docker run --network=host -p 3000:3000 -d node-blog-app
+```
+ssh blog@T 'sh /home/blog/app/next-blog/deploy.sh'
+
+## nginx
+```
+docker run --name nginx1 --network=host -v /home/blog/app/next-blog/nginx.conf:/etc/nginx/conf.d/default.conf -v /home/blog/app/next-blog/.next/static:/usr/shar/nginx/html/_next/static nginx:1.23.3
 ```
