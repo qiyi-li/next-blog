@@ -42,5 +42,5 @@ ssh blog@T 'sh /home/blog/app/next-blog/deploy.sh'
 
 ## nginx
 ```
-docker run --name nginx1 --network=host -v /home/blog/app/next-blog/nginx.conf:/etc/nginx/conf.d/default.conf -v /home/blog/app/next-blog/.next/static:/usr/shar/nginx/html/_next/static nginx:1.23.3
+docker run --name nginx1 --network=host -v /home/blog/app/next-blog/nginx.conf:/etc/nginx/conf.d/default.conf -v /home/blog/app/next-blog/.next/static:/usr/share/nginx/html/_next/static -d nginx:1.23.3
 ```
