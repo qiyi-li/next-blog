@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "concurrently \"next dev\" \"babel -w ./src --out-dir dist --extensions .ts,.tsx\"",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 4000",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "typeorm:build": "babel -w ./src --out-dir dist --extensions .ts,.tsx",
     "m:create": "typeorm migration:create",
